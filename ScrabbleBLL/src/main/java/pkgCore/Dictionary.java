@@ -57,7 +57,7 @@ public class Dictionary {
 	public ArrayList<Word> GenerateWords(String strLetters) {
 		ArrayList<String> combinWords = new ArrayList<String>();
 		//TODO: Generate the combinations based on incoming strLetters
-		
+		combinWords = Combin(strLetters);
 		//TODO: Take the combinations computed and call GeneratePossibleWords(ArrayList<String>)
 		
 		ArrayList<Word> WordsPermut = GeneratePossibleWords(combinWords);
@@ -76,6 +76,9 @@ public class Dictionary {
 	private HashSet<Word> GeneratePossibleWords(String strLetters) {
 		HashSet<Word> hsPossibleWords = new HashSet<Word>();
 		//TODO: Insert the code that will generate the permutations
+		for(int i = 0; i <= strLetters.length(),i++) {
+			
+		}
 		return hsPossibleWords;
 	}
 	
