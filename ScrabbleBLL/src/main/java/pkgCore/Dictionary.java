@@ -59,8 +59,9 @@ public class Dictionary {
 		//TODO: Generate the combinations based on incoming strLetters
 		combinWords = Combin(strLetters);
 		//TODO: Take the combinations computed and call GeneratePossibleWords(ArrayList<String>)
-		
 		ArrayList<Word> WordsPermut = GeneratePossibleWords(combinWords);
+		WordsPermut = GeneratePossibleWords(combinWords)
+
 		//	Here's how you sort
 		Collections.sort(WordsPermut, Word.CompWord);
 		return WordsPermut;
