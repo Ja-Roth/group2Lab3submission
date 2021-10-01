@@ -50,7 +50,18 @@ public class Dictionary {
 	 * @return
 	 */
 	public ArrayList<Word> GenerateWords(String strLetters) {
-		ArrayList<Word> WordsPermut = GeneratePossibleWords(COMBINExample.Combin(strLetters));
+		ArrayList<String> combinations = new ArrayList<String>();
+		for (char c : strLetters.toCharArray()) combinations.add(String.valueOf(c));
+		for (int x = 0; x < combinations.size(); x++) {
+			String s = combinations.get(x);
+			for (int i = 0; i < strLetters.length(); i++) { // iterate through each letter
+				int occurences = 0, count = 0;
+				for (char c : strLetters.toCharArray()) count += (strLetters.charAt(i) == c) ? 1 : 0;
+				for (char c : s.toCharArray()) occurences += (strLetters.charAt(i) == c) ? 1 : 0;
+				if (occurences < count) combinations.add(s + String.valueOf(strLetters.charAt(i)));
+			}
+		}
+		ArrayList<Word> WordsPermut = GeneratePossibleWords(combinations);
 		Collections.sort(WordsPermut, Word.CompWord);
 		return WordsPermut;
 	}
