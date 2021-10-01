@@ -9,11 +9,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-
-import org.apache.commons.math3.util.CombinatoricsUtils;
-
 import com.google.common.collect.Collections2;
 
 public class Dictionary {
@@ -55,14 +50,7 @@ public class Dictionary {
 	 * @return
 	 */
 	public ArrayList<Word> GenerateWords(String strLetters) {
-		ArrayList<String> combinWords = new ArrayList<String>();
-		//TODO: Generate the combinations based on incoming strLetters
-		combinWords = Combin(strLetters);
-		//TODO: Take the combinations computed and call GeneratePossibleWords(ArrayList<String>)
-		ArrayList<Word> WordsPermut = GeneratePossibleWords(combinWords);
-		WordsPermut = GeneratePossibleWords(combinWords);
-
-		//	Here's how you sort
+		ArrayList<Word> WordsPermut = GeneratePossibleWords(COMBINExample.Combin(strLetters));
 		Collections.sort(WordsPermut, Word.CompWord);
 		return WordsPermut;
 	}
@@ -73,16 +61,25 @@ public class Dictionary {
 			words.addAll(GeneratePossibleWords(strPossibleWord));
 		}
 		ArrayList<Word> myWords = new ArrayList<Word>(words);
-		Collections.sort(myWords, Word.CompWord);
-		ArrayList<Word> arrWords = new ArrayList<Word>();
-		return arrWords;
+		return myWords;
 	}
 
 	private HashSet<Word> GeneratePossibleWords(String strLetters) {
 		HashSet<Word> hsPossibleWords = new HashSet<Word>();
-		//TODO: Insert the code that will generate the permutations
-		for(int i = 0; i <= strLetters.length();i++) {
-			
+		Boolean finished = false;
+		for (char c : strLetters.toCharArray()) hsPossibleWords.add(new Word(String.valueOf(c))); // add all letters
+		while (!finished) {
+			HashSet<Word> words = new HashSet<Word>(hsPossibleWords); // prevent concurrent modification
+			for (Word w : hsPossibleWords) {
+				for (int i = 0; i < strLetters.length(); i++) { // iterate through each letter
+					int occurences = 0, count = 0;
+					for (char c : strLetters.toCharArray()) count += (strLetters.charAt(i) == c) ? 1 : 0;
+					for (char c : w.getWord().toCharArray()) occurences += (strLetters.charAt(i) == c) ? 1 : 0;
+					if (occurences < count) words.add(new Word(w.getWord() + strLetters.charAt(i)));
+				}
+			}
+			if (words.equals(hsPossibleWords)) finished = true; // if nothing changes, loop is finished
+			hsPossibleWords.addAll(words);
 		}
 		return hsPossibleWords;
 	}
