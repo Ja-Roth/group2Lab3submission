@@ -18,6 +18,10 @@ public class Word implements Comparable<Word> {
 		Word w = (Word)obj;
 		return (w.getWord().equals(this.getWord()));
 	}
+	@Override
+	public int hashCode() {
+		return this.getWord().hashCode();
+	}
 
 	@Override
 	public int compareTo(Word o) {
